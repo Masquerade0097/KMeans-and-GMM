@@ -27,16 +27,16 @@ for class_title, path_details in path_details.items():
         features = []
 
         # Dividing image into patch with size 32 x 32
-        for i in range(int(len(image)/32)):
-            for j in range(int(len(image[0])/32)):
-                patch = np.array([pixel[j*32:(j+1)*32] for pixel in image[i*32:(i+1)*32]])
+        for i in range(int(len(image)/patch_size)):
+            for j in range(int(len(image[0])/patch_size)):
+                patch = np.array([pixel[j*patch_size:(j+1)*patch_size] for pixel in image[i*patch_size:(i+1)*patch_size]])
                 
                 color_histogram = np.zeros(24).astype(np.int)
                 for pix_row in range(len(patch)):
                     for pix_col in range(len(patch[0])):
                         for color_index in range(0, 3):
                             color_value = patch[pix_row][pix_col][color_index]
-                            color_histogram[color_index * 8 + int(color_value / 32)] += 1
+                            color_histogram[color_index * 8 + int(color_value / bin_size)] += 1
                 features.append(color_histogram)
         features = np.array(features).astype(np.int)
 
